@@ -2,14 +2,14 @@ use std::collections::HashSet;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-fn score(lines: impl Iterator<Item = String>) -> u32 {
+fn score(lines: impl Iterator<Item = String>) -> usize {
     lines
         .map(|x| split_backpack(&x))
         .map(|x| sum_intersection(&x))
         .sum()
 }
 
-fn find_badges(lines: impl Iterator<Item = String>) -> u32 {
+fn find_badges(lines: impl Iterator<Item = String>) -> usize {
     lines
         .map(|x| parse_contents(&x))
         .collect::<Vec<_>>()
@@ -18,7 +18,7 @@ fn find_badges(lines: impl Iterator<Item = String>) -> u32 {
         .sum()
 }
 
-fn sum_intersection(sets: &Vec<HashSet<u32>>) -> u32 {
+fn sum_intersection(sets: &Vec<HashSet<usize>>) -> usize {
     sets.iter()
         .cloned()
         .reduce(|a, b| &a & &b)
@@ -27,22 +27,22 @@ fn sum_intersection(sets: &Vec<HashSet<u32>>) -> u32 {
         .sum()
 }
 
-fn split_backpack(backpack: &str) -> Vec<HashSet<u32>> {
+fn split_backpack(backpack: &str) -> Vec<HashSet<usize>> {
     let c = backpack.split_at(backpack.len() / 2);
     vec![parse_contents(c.0), parse_contents(c.1)]
 }
 
-fn parse_contents(contents: &str) -> HashSet<u32> {
+fn parse_contents(contents: &str) -> HashSet<usize> {
     contents.chars().map(|x| parse_char(x)).collect()
 }
 
-fn parse_char(c: char) -> u32 {
+fn parse_char(c: char) -> usize {
     let x = c as u8;
     (if x >= b'a' {
         1 + x - b'a'
     } else {
         27 + x - b'A'
-    }) as u32
+    }) as usize
 }
 
 #[test]

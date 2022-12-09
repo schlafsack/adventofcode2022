@@ -1,12 +1,12 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-fn max(lines: impl Iterator<Item = String>, len: usize) -> i32 {
-    let mut result: Vec<i32> = vec![0; len];
-    let mut totcal = 0;
+fn max(lines: impl Iterator<Item = String>, len: usize) -> usize {
+    let mut result: Vec<usize> = vec![0; len];
+    let mut totcal = 0usize;
 
     for line in lines {
-        let cal = str::parse::<i32>(&line);
+        let cal = str::parse::<usize>(&line);
         if cal.is_ok() {
             totcal += cal.unwrap();
         } else {
