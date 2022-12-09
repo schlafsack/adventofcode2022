@@ -2,7 +2,7 @@ use std::collections::VecDeque;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-fn organise(mut lines: impl Iterator<Item = String>, is_9000: bool) -> String {
+fn organise(mut lines: impl Iterator<Item = String>, is_9001: bool) -> String {
     // parse and build stacks
     let mut stacks = lines
         .by_ref()
@@ -35,7 +35,7 @@ fn organise(mut lines: impl Iterator<Item = String>, is_9000: bool) -> String {
         .for_each(|instruction| {
             let len = stacks[instruction.1-1].len() - instruction.0;
             let mut load = stacks[instruction.1-1].split_off(len);
-            if is_9000 { load.make_contiguous().reverse(); }
+            if !is_9001 { load.make_contiguous().reverse(); }
             stacks[instruction.2-1].append(&mut load);
         });
     // concat the top items in each stack.
@@ -49,14 +49,14 @@ fn organise(mut lines: impl Iterator<Item = String>, is_9000: bool) -> String {
 #[test]
 fn test_part_one() {
     let input = getinput("src/day05/bin/input.txt");
-    let result = organise(input, true);
+    let result = organise(input, false);
     assert_eq!(result, "MQTPGLLDN");
 }
 
 #[test]
 fn test_part_two() {
     let input = getinput("src/day05/bin/input.txt");
-    let result = organise(input, false);
+    let result = organise(input, true);
     assert_eq!(result, "LVZPSTTCZ");
 }
 
