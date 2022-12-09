@@ -8,13 +8,13 @@ fn organise(mut lines: impl Iterator<Item = String>, is_9000: bool) -> String {
     let mut stacks = lines
         .by_ref()
         .take_while(|x| x.len() > 0)
-        .flat_map(|x| {
-            x.chars()
+        .flat_map(|line| {
+            line.chars()
                 .collect::<Vec<char>>()
                 .chunks(4)
-                .map(|x| x[1])
+                .map(|chunk| chunk[1])
                 .enumerate()
-                .filter(|x| x.1.is_alphabetic())
+                .filter(|slot| slot.1.is_alphabetic())
                 .collect::<Vec<(usize, char)>>()
         })
         .fold(Vec::new(), |mut stacks: Vec<VecDeque<char>>, item| {
@@ -25,30 +25,32 @@ fn organise(mut lines: impl Iterator<Item = String>, is_9000: bool) -> String {
 
     // follow moving instructions
     let re = Regex::new(r"^\D*(\d*)\D*(\d*)\D*(\d*)$").unwrap();
-    lines.map(|x| {
-        re.captures(&x)
-            .map(|cap| {
-                (
-                    cap[1].parse::<usize>().unwrap(),
-                    cap[2].parse::<usize>().unwrap() - 1,
-                    cap[3].parse::<usize>().unwrap() - 1,
-                )
-            })
-            .unwrap()
-    })
-        .for_each(|x| {
-            let len = stacks[x.1].len() - x.0;
-            let mut a = stacks[x.1].split_off(len);
+    lines
+        .map(|line| {
+            re.captures(&line)
+                .map(|cap| {
+                    (
+                        cap[1].parse::<usize>().unwrap(),
+                        cap[2].parse::<usize>().unwrap() - 1,
+                        cap[3].parse::<usize>().unwrap() - 1,
+                    )
+                })
+                .unwrap()
+        })
+        .for_each(|instruction| {
+            let len = stacks[instruction.1].len() - instruction.0;
+            let mut load = stacks[instruction.1].split_off(len);
             if is_9000 {
-                a.make_contiguous().reverse();
+                load.make_contiguous().reverse();
             }
-            stacks[x.2].append(&mut a);
+            stacks[instruction.2].append(&mut load);
         });
 
+    // concat the top items in each stack.
     stacks
         .iter()
-        .map(|x| x.back().unwrap().to_string())
-        .reduce(|x, y| x + &y)
+        .map(|stack| stack.back().unwrap().to_string())
+        .reduce(|items, item| items + &item)
         .unwrap()
 }
 
