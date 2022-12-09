@@ -19,13 +19,9 @@ fn parse_game(game: String) -> (i32, i32) {
         .unwrap()
 }
 
-fn play_strategy(them: i32, us: i32) -> i32 {
-    us + ((((us - them).rem_euclid(3) + 1) % 3) * 3)
-}
+fn play_strategy(them: i32, us: i32) -> i32 { us + ((((us - them).rem_euclid(3) + 1) % 3) * 3) }
 
-fn rig_strategy(them: i32, result: i32) -> i32 {
-    (((them + result).rem_euclid(3)) + 1) + ((result - 1) * 3)
-}
+fn rig_strategy(them: i32, result: i32) -> i32 { (((them + result).rem_euclid(3)) + 1) + ((result - 1) * 3) }
 
 #[test]
 fn test_part_one() {
