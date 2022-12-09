@@ -1,4 +1,3 @@
-use regex::Regex;
 use std::collections::VecDeque;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
@@ -22,30 +21,23 @@ fn organise(mut lines: impl Iterator<Item = String>, is_9000: bool) -> String {
             stacks[item.0].push_front(item.1);
             stacks
         });
-
     // follow moving instructions
-    let re = Regex::new(r"^\D*(\d*)\D*(\d*)\D*(\d*)$").unwrap();
     lines
         .map(|line| {
-            re.captures(&line)
-                .map(|cap| {
-                    (
-                        cap[1].parse::<usize>().unwrap(),
-                        cap[2].parse::<usize>().unwrap() - 1,
-                        cap[3].parse::<usize>().unwrap() - 1,
-                    )
-                })
-                .unwrap()
+            let elements = line
+                .split(' ')
+                .skip(1)
+                .step_by(2)
+                .map(|x| x.parse::<usize>().unwrap())
+                .collect::<Vec<usize>>();
+            (elements[0], elements[1], elements[2])
         })
         .for_each(|instruction| {
-            let len = stacks[instruction.1].len() - instruction.0;
-            let mut load = stacks[instruction.1].split_off(len);
-            if is_9000 {
-                load.make_contiguous().reverse();
-            }
-            stacks[instruction.2].append(&mut load);
+            let len = stacks[instruction.1-1].len() - instruction.0;
+            let mut load = stacks[instruction.1-1].split_off(len);
+            if is_9000 { load.make_contiguous().reverse(); }
+            stacks[instruction.2-1].append(&mut load);
         });
-
     // concat the top items in each stack.
     stacks
         .iter()
