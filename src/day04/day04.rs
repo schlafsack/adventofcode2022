@@ -35,14 +35,14 @@ fn parse_assignments(assignments: &str) -> ((usize, usize), (usize, usize)) {
 
 #[test]
 fn test_part_one() {
-    let input = getinput("src/day04/bin/input.txt");
+    let input = getinput("src/day04/input.txt");
     let result = find(input, contains);
     assert_eq!(result, 573);
 }
 
 #[test]
 fn test_part_two() {
-    let input = getinput("src/day04/bin/input.txt");
+    let input = getinput("src/day04/input.txt");
     let result = find(input, overlaps);
     assert_eq!(result, 867);
 }

@@ -22,14 +22,14 @@ fn max(lines: impl Iterator<Item = String>, len: usize) -> usize {
 
 #[test]
 fn test_part_one() {
-    let input = getinput("src/day01/bin/input.txt");
+    let input = getinput("src/day01/input.txt");
     let result = max(input, 1);
     assert_eq!(result, 72240);
 }
 
 #[test]
 fn test_part_two() {
-    let input = getinput("src/day01/bin/input.txt");
+    let input = getinput("src/day01/input.txt");
     let result = max(input, 3);
     assert_eq!(result, 210957);
 }

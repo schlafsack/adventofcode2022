@@ -47,7 +47,7 @@ fn parse_char(c: char) -> usize {
 
 #[test]
 fn test_part_one() {
-    let input = getinput("src/day03/bin/input.txt");
+    let input = getinput("src/day03/input.txt");
     let result = score(input);
 
     assert_eq!(result, 8202);
@@ -55,7 +55,7 @@ fn test_part_one() {
 
 #[test]
 fn test_part_two() {
-    let input = getinput("src/day03/bin/input.txt");
+    let input = getinput("src/day03/input.txt");
     let result = find_badges(input);
 
     assert_eq!(result, 2864);

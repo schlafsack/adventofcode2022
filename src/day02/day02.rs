@@ -25,7 +25,7 @@ fn rig_strategy(them: isize, result: isize) -> isize { (((them + result).rem_euc
 
 #[test]
 fn test_part_one() {
-    let input = getinput("src/day02/bin/input.txt");
+    let input = getinput("src/day02/input.txt");
     let result = score(input, play_strategy);
 
     assert_eq!(result, 9651);
@@ -33,7 +33,7 @@ fn test_part_one() {
 
 #[test]
 fn test_part_two() {
-    let input = getinput("src/day02/bin/input.txt");
+    let input = getinput("src/day02/input.txt");
     let result = score(input, rig_strategy);
     assert_eq!(result, 10560);
 }

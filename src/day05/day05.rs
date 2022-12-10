@@ -48,14 +48,14 @@ fn organise(mut lines: impl Iterator<Item = String>, is_9001: bool) -> String {
 
 #[test]
 fn test_part_one() {
-    let input = getinput("src/day05/bin/input.txt");
+    let input = getinput("src/day05/input.txt");
     let result = organise(input, false);
     assert_eq!(result, "MQTPGLLDN");
 }
 
 #[test]
 fn test_part_two() {
-    let input = getinput("src/day05/bin/input.txt");
+    let input = getinput("src/day05/input.txt");
     let result = organise(input, true);
     assert_eq!(result, "LVZPSTTCZ");
 }
