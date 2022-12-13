@@ -3,15 +3,15 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 fn find_sizes(input: impl Iterator<Item = String>) -> HashMap<String, usize> {
-    let mut stack = Vec::new();
+    let mut path = Vec::new();
     let mut dirs = HashMap::new();
     input.for_each(|line| match &line {
-        x if x.starts_with("$ cd ..") => { stack.pop(); }
-        x if x.starts_with("$ cd ") => { stack.push(x.clone()); }
+        x if x.starts_with("$ cd ..") => { path.pop(); }
+        x if x.starts_with("$ cd ") => { path.push(x.clone()); }
         x if x.as_bytes()[0].is_ascii_digit() => {
             let size = x.split_once(" ").unwrap().0.parse::<usize>().unwrap();
-            for i in 1..=stack.len() {
-                dirs.entry(stack[..i].concat())
+            for i in 1..=path.len() {
+                dirs.entry(path[..i].concat())
                     .and_modify(|tot| *tot += size)
                     .or_insert(size);
             }}

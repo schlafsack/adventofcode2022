@@ -34,8 +34,10 @@ name = "day07"
 path = "src/day07/day07.rs"
 
 [[bin]]
-name = "day07sample"
-path = "src/day07/sample.rs"
+name = "day08"
+path = "src/day08/day08.rs"
 
 [dependencies]
-regex = "1.7.0"
+regex = "*"
+ndarray = "*"
+take-until = "*"
